@@ -1,0 +1,438 @@
+{
+  "id": "tnr_1757597680876_rowziu",
+  "name": "record-Demo gpm test",
+  "description": "gpm test demo",
+  "tags": [
+    "simu-evse",
+    "GPM"
+  ],
+  "folder": "simu-evse",
+  "createdAt": "2025-09-11T13:34:40.879Z",
+  "config": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+  },
+  "sessions": [
+    {
+      "id": "session_sim-1757597629043-mboi_1757597680879",
+      "cpId": "sim-1757597629043-mboi",
+      "idTag": "TAG-001",
+      "steps": [
+        {
+          "at": 3004,
+          "type": "ui",
+          "action": "CONNECT",
+          "payload": {
+            "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket/POP-REGULATION-TEST-TOMY2",
+            "cpId": "POP-REGULATION-TEST-TOMY2",
+            "idTag": "TAG-001",
+            "evseType": "ac-mono",
+            "maxA": 32
+          }
+        },
+        {
+          "at": 6387,
+          "type": "ui",
+          "action": "PARK",
+          "payload": {}
+        },
+        {
+          "at": 7923,
+          "type": "ui",
+          "action": "PLUG",
+          "payload": {}
+        },
+        {
+          "at": 9041,
+          "type": "ui",
+          "action": "Authorize",
+          "payload": {
+            "idTag": "TAG-001"
+          }
+        },
+        {
+          "at": 10608,
+          "type": "ui",
+          "action": "StartTransaction",
+          "payload": {
+            "connectorId": 1,
+            "mvEvery": 10
+          }
+        },
+        {
+          "at": 11013,
+          "type": "ui",
+          "action": "MeterValues",
+          "payload": {}
+        },
+        {
+          "at": 14975,
+          "type": "ui",
+          "action": "StartTransaction",
+          "payload": {
+            "connectorId": 1,
+            "mvEvery": 10
+          }
+        },
+        {
+          "at": 15009,
+          "type": "ui",
+          "action": "MeterValues",
+          "payload": {}
+        },
+        {
+          "at": 19006,
+          "type": "ui",
+          "action": "MeterValues",
+          "payload": {}
+        }
+      ],
+      "metadata": {
+        "firstEventTime": 3004,
+        "lastEventTime": 19006,
+        "totalEvents": 9
+      }
+    },
+    {
+      "id": "session_POP-REGULATION-TEST-TOMY2_1757597680879",
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "idTag": "TAG-001",
+      "steps": [
+        {
+          "at": 3301,
+          "type": "send",
+          "action": "BootNotification",
+          "payload": {
+            "chargePointVendor": "EVSE Simulator",
+            "chargePointModel": "PerfClient"
+          }
+        },
+        {
+          "at": 6382,
+          "type": "send",
+          "action": "StatusNotification",
+          "payload": {
+            "connectorId": 1,
+            "status": "Available",
+            "errorCode": "NoError",
+            "timestamp": "2025-09-11T13:33:52.440Z"
+          }
+        },
+        {
+          "at": 7921,
+          "type": "send",
+          "action": "StatusNotification",
+          "payload": {
+            "connectorId": 1,
+            "status": "Preparing",
+            "errorCode": "NoError",
+            "timestamp": "2025-09-11T13:33:53.978Z"
+          }
+        },
+        {
+          "at": 9037,
+          "type": "send",
+          "action": "Authorize",
+          "payload": {
+            "idTag": "TAG-001"
+          }
+        },
+        {
+          "at": 10590,
+          "type": "send",
+          "action": "StartTransaction",
+          "payload": {
+            "connectorId": 1,
+            "idTag": "TAG-001",
+            "meterStart": 0,
+            "timestamp": "2025-09-11T13:33:56.648Z"
+          }
+        },
+        {
+          "at": 14954,
+          "type": "send",
+          "action": "StartTransaction",
+          "payload": {
+            "connectorId": 1,
+            "idTag": "TAG-001",
+            "meterStart": 0,
+            "timestamp": "2025-09-11T13:34:01.012Z"
+          }
+        }
+      ],
+      "metadata": {
+        "firstEventTime": 3301,
+        "lastEventTime": 14954,
+        "totalEvents": 15
+      }
+    }
+  ],
+  "events": [
+    {
+      "t": 3004,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "CONNECT",
+      "payload": {
+        "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket/POP-REGULATION-TEST-TOMY2",
+        "cpId": "POP-REGULATION-TEST-TOMY2",
+        "idTag": "TAG-001",
+        "evseType": "ac-mono",
+        "maxA": 32
+      },
+      "timestamp": 1757597629062
+    },
+    {
+      "t": 3301,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient"
+      },
+      "timestamp": 1757597629359
+    },
+    {
+      "t": 3425,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Accepted",
+        "currentTime": "2025-09-11T13:33:50.406Z",
+        "interval": 300
+      },
+      "timestamp": 1757597629483
+    },
+    {
+      "t": 3425,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Accepted",
+        "currentTime": "2025-09-11T13:33:50.406Z",
+        "interval": 300
+      },
+      "timestamp": 1757597629483
+    },
+    {
+      "t": 3538,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      },
+      "timestamp": 1757597629596
+    },
+    {
+      "t": 6382,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Available",
+        "errorCode": "NoError",
+        "timestamp": "2025-09-11T13:33:52.440Z"
+      },
+      "timestamp": 1757597632440
+    },
+    {
+      "t": 6387,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "PARK",
+      "payload": {},
+      "timestamp": 1757597632445
+    },
+    {
+      "t": 6445,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1757597632503
+    },
+    {
+      "t": 6445,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1757597632503
+    },
+    {
+      "t": 7921,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Preparing",
+        "errorCode": "NoError",
+        "timestamp": "2025-09-11T13:33:53.978Z"
+      },
+      "timestamp": 1757597633979
+    },
+    {
+      "t": 7923,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "PLUG",
+      "payload": {},
+      "timestamp": 1757597633981
+    },
+    {
+      "t": 7999,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1757597634057
+    },
+    {
+      "t": 7999,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1757597634057
+    },
+    {
+      "t": 9037,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "Authorize",
+      "payload": {
+        "idTag": "TAG-001"
+      },
+      "timestamp": 1757597635095
+    },
+    {
+      "t": 9041,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "Authorize",
+      "payload": {
+        "idTag": "TAG-001"
+      },
+      "timestamp": 1757597635099
+    },
+    {
+      "t": 9160,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "AuthorizeResult",
+      "payload": {
+        "idTagInfo": {
+          "status": "Accepted"
+        }
+      },
+      "timestamp": 1757597635218
+    },
+    {
+      "t": 9160,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "AuthorizeResult",
+      "payload": {
+        "idTagInfo": {
+          "status": "Accepted"
+        }
+      },
+      "timestamp": 1757597635218
+    },
+    {
+      "t": 10590,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "idTag": "TAG-001",
+        "meterStart": 0,
+        "timestamp": "2025-09-11T13:33:56.648Z"
+      },
+      "timestamp": 1757597636648
+    },
+    {
+      "t": 10608,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "mvEvery": 10
+      },
+      "timestamp": 1757597636666
+    },
+    {
+      "t": 11013,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "MeterValues",
+      "payload": {},
+      "timestamp": 1757597637071
+    },
+    {
+      "t": 14954,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "idTag": "TAG-001",
+        "meterStart": 0,
+        "timestamp": "2025-09-11T13:34:01.012Z"
+      },
+      "timestamp": 1757597641012
+    },
+    {
+      "t": 14975,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "mvEvery": 10
+      },
+      "timestamp": 1757597641033
+    },
+    {
+      "t": 15009,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "MeterValues",
+      "payload": {},
+      "timestamp": 1757597641067
+    },
+    {
+      "t": 19006,
+      "cpId": "sim-1757597629043-mboi",
+      "dir": "ui",
+      "action": "MeterValues",
+      "payload": {},
+      "timestamp": 1757597645064
+    }
+  ],
+  "metadata": {
+    "name": "record-Demo gpm test",
+    "description": "gpm test demo",
+    "tags": [
+      "simu-evse",
+      "GPM"
+    ],
+    "folder": "simu-evse",
+    "config": {
+      "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+    },
+    "startedAt": "2025-09-11T13:33:46.058Z",
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket",
+    "endedAt": "2025-09-11T13:34:40.879Z",
+    "durationMs": 54821
+  },
+  "expected": {}
+}

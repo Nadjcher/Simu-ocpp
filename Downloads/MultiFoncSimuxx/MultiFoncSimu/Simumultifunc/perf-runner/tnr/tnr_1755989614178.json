@@ -1,0 +1,1076 @@
+{
+  "id": "tnr_1755989614178",
+  "name": "rec_1755989614178",
+  "description": "",
+  "tags": [],
+  "createdAt": "2025-08-23T23:01:13.619Z",
+  "config": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+  },
+  "sessions": [
+    {
+      "id": "session_POP-REGULATION-TEST-TOMY2_1755990073619",
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "idTag": "TAG-001",
+      "steps": [
+        {
+          "at": 2991,
+          "type": "send",
+          "action": "BootNotification",
+          "payload": {
+            "chargePointVendor": "EVSE Simulator",
+            "chargePointModel": "PerfClient",
+            "chargePointSerialNumber": "POP-REGULATION-TEST-TOMY2",
+            "chargeBoxSerialNumber": "POP-REGULATION-TEST-TOMY2",
+            "firmwareVersion": "perf",
+            "meterType": "AC",
+            "meterSerialNumber": "METER-POP-REGULATION-TEST-TOMY2"
+          }
+        },
+        {
+          "at": 4934,
+          "type": "send",
+          "action": "StatusNotification",
+          "payload": {
+            "connectorId": 1,
+            "status": "Available",
+            "errorCode": "NoError",
+            "timestamp": "2025-08-23T23:00:19.018Z"
+          }
+        },
+        {
+          "at": 6230,
+          "type": "send",
+          "action": "StatusNotification",
+          "payload": {
+            "connectorId": 1,
+            "status": "Preparing",
+            "errorCode": "NoError",
+            "timestamp": "2025-08-23T23:00:20.314Z"
+          }
+        },
+        {
+          "at": 7822,
+          "type": "send",
+          "action": "Authorize",
+          "payload": {
+            "idTag": "AVSE-TAG-001"
+          }
+        },
+        {
+          "at": 9144,
+          "type": "send",
+          "action": "StartTransaction",
+          "payload": {
+            "connectorId": 1,
+            "idTag": "AVSE-TAG-001",
+            "meterStart": 0,
+            "timestamp": "2025-08-23T23:00:23.227Z"
+          }
+        },
+        {
+          "at": 19371,
+          "type": "send",
+          "action": "MeterValues",
+          "payload": {
+            "connectorId": 1,
+            "transactionId": 225,
+            "meterValue": [
+              {
+                "timestamp": "2025-08-23T23:00:33.455Z",
+                "sampledValue": [
+                  {
+                    "value": "21",
+                    "measurand": "Energy.Active.Import.Register",
+                    "unit": "Wh",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7335",
+                    "measurand": "Power.Active.Import",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "20",
+                    "measurand": "SoC",
+                    "unit": "Percent",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7360",
+                    "measurand": "Power.Offered",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "32.2",
+                    "measurand": "Current.Import",
+                    "unit": "A",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "230",
+                    "measurand": "Voltage",
+                    "unit": "V",
+                    "context": "Sample.Periodic"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 29380,
+          "type": "send",
+          "action": "MeterValues",
+          "payload": {
+            "connectorId": 1,
+            "transactionId": 225,
+            "meterValue": [
+              {
+                "timestamp": "2025-08-23T23:00:43.464Z",
+                "sampledValue": [
+                  {
+                    "value": "42",
+                    "measurand": "Energy.Active.Import.Register",
+                    "unit": "Wh",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7437",
+                    "measurand": "Power.Active.Import",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "20.1",
+                    "measurand": "SoC",
+                    "unit": "Percent",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7360",
+                    "measurand": "Power.Offered",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "32.2",
+                    "measurand": "Current.Import",
+                    "unit": "A",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "230",
+                    "measurand": "Voltage",
+                    "unit": "V",
+                    "context": "Sample.Periodic"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 39394,
+          "type": "send",
+          "action": "MeterValues",
+          "payload": {
+            "connectorId": 1,
+            "transactionId": 225,
+            "meterValue": [
+              {
+                "timestamp": "2025-08-23T23:00:53.478Z",
+                "sampledValue": [
+                  {
+                    "value": "62",
+                    "measurand": "Energy.Active.Import.Register",
+                    "unit": "Wh",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7282",
+                    "measurand": "Power.Active.Import",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "20.1",
+                    "measurand": "SoC",
+                    "unit": "Percent",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7360",
+                    "measurand": "Power.Offered",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "32.2",
+                    "measurand": "Current.Import",
+                    "unit": "A",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "230",
+                    "measurand": "Voltage",
+                    "unit": "V",
+                    "context": "Sample.Periodic"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 49398,
+          "type": "send",
+          "action": "MeterValues",
+          "payload": {
+            "connectorId": 1,
+            "transactionId": 225,
+            "meterValue": [
+              {
+                "timestamp": "2025-08-23T23:01:03.482Z",
+                "sampledValue": [
+                  {
+                    "value": "83",
+                    "measurand": "Energy.Active.Import.Register",
+                    "unit": "Wh",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7645",
+                    "measurand": "Power.Active.Import",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "20.1",
+                    "measurand": "SoC",
+                    "unit": "Percent",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "7360",
+                    "measurand": "Power.Offered",
+                    "unit": "W",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "32.2",
+                    "measurand": "Current.Import",
+                    "unit": "A",
+                    "context": "Sample.Periodic"
+                  },
+                  {
+                    "value": "230",
+                    "measurand": "Voltage",
+                    "unit": "V",
+                    "context": "Sample.Periodic"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 55930,
+          "type": "send",
+          "action": "StopTransaction",
+          "payload": {
+            "transactionId": 225,
+            "meterStop": 0,
+            "timestamp": "2025-08-23T23:01:10.014Z",
+            "reason": "Local"
+          }
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "t": 2531,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:CONNECT",
+      "payload": {
+        "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket/POP-REGULATION-TEST-TOMY2",
+        "cpId": "POP-REGULATION-TEST-TOMY2",
+        "idTag": "AVSE-TAG-001",
+        "evseType": "ac-mono",
+        "maxA": 32
+      }
+    },
+    {
+      "t": 2536,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:APPLY_MV_MASK",
+      "payload": {
+        "mvMask": {
+          "powerActive": true,
+          "energy": true,
+          "soc": true,
+          "powerOffered": true
+        },
+        "mvEvery": 10,
+        "socStart": 20,
+        "socTarget": 80,
+        "evseType": "ac-mono",
+        "maxA": 32
+      }
+    },
+    {
+      "t": 2991,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "chargeBoxSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-POP-REGULATION-TEST-TOMY2"
+      },
+      "timestamp": 1755990017075
+    },
+    {
+      "t": 3202,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Accepted",
+        "currentTime": "2025-08-23T23:00:17.185Z",
+        "interval": 300
+      },
+      "timestamp": 1755990017286
+    },
+    {
+      "t": 4934,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Available",
+        "errorCode": "NoError",
+        "timestamp": "2025-08-23T23:00:19.018Z"
+      },
+      "timestamp": 1755990019018
+    },
+    {
+      "t": 4944,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:PARK",
+      "payload": {}
+    },
+    {
+      "t": 5036,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1755990019120
+    },
+    {
+      "t": 5141,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      },
+      "timestamp": 1755990019225
+    },
+    {
+      "t": 6230,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Preparing",
+        "errorCode": "NoError",
+        "timestamp": "2025-08-23T23:00:20.314Z"
+      },
+      "timestamp": 1755990020314
+    },
+    {
+      "t": 6232,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:PLUG",
+      "payload": {}
+    },
+    {
+      "t": 6286,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StatusNotificationResult",
+      "payload": {},
+      "timestamp": 1755990020370
+    },
+    {
+      "t": 7822,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "Authorize",
+      "payload": {
+        "idTag": "AVSE-TAG-001"
+      },
+      "timestamp": 1755990021906
+    },
+    {
+      "t": 7830,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:Authorize",
+      "payload": {
+        "idTag": "AVSE-TAG-001"
+      }
+    },
+    {
+      "t": 8060,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "AuthorizeResult",
+      "payload": {
+        "idTagInfo": {
+          "status": "Accepted"
+        }
+      },
+      "timestamp": 1755990022144
+    },
+    {
+      "t": 9144,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "idTag": "AVSE-TAG-001",
+        "meterStart": 0,
+        "timestamp": "2025-08-23T23:00:23.227Z"
+      },
+      "timestamp": 1755990023228
+    },
+    {
+      "t": 9153,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "mvEvery": 10
+      }
+    },
+    {
+      "t": 9362,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StartTransactionResult",
+      "payload": {
+        "transactionId": 225,
+        "idTagInfo": {
+          "status": "Accepted",
+          "parentIdTag": "AVSE-TAG-001"
+        }
+      },
+      "timestamp": 1755990023446
+    },
+    {
+      "t": 19371,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 225,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-23T23:00:33.455Z",
+            "sampledValue": [
+              {
+                "value": "21",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7335",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "20",
+                "measurand": "SoC",
+                "unit": "Percent",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1755990033455
+    },
+    {
+      "t": 19543,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 19626,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "MeterValuesResult",
+      "payload": {},
+      "timestamp": 1755990033710
+    },
+    {
+      "t": 21532,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 23534,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 24537,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 26537,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 27538,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.335,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20
+      }
+    },
+    {
+      "t": 29380,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 225,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-23T23:00:43.464Z",
+            "sampledValue": [
+              {
+                "value": "42",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7437",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "20.1",
+                "measurand": "SoC",
+                "unit": "Percent",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1755990043464
+    },
+    {
+      "t": 29514,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "MeterValuesResult",
+      "payload": {},
+      "timestamp": 1755990043598
+    },
+    {
+      "t": 29541,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 31542,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 33532,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 34538,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 35549,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 37539,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.437,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 39394,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 225,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-23T23:00:53.478Z",
+            "sampledValue": [
+              {
+                "value": "62",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7282",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "20.1",
+                "measurand": "SoC",
+                "unit": "Percent",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1755990053478
+    },
+    {
+      "t": 39533,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 39604,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "MeterValuesResult",
+      "payload": {},
+      "timestamp": 1755990053688
+    },
+    {
+      "t": 40535,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 41537,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 43535,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 45540,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 46542,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 48537,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.282,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 49398,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 225,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-23T23:01:03.482Z",
+            "sampledValue": [
+              {
+                "value": "83",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7645",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "20.1",
+                "measurand": "SoC",
+                "unit": "Percent",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1755990063482
+    },
+    {
+      "t": 49452,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "MeterValuesResult",
+      "payload": {},
+      "timestamp": 1755990063536
+    },
+    {
+      "t": 49544,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 51532,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 52538,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 54532,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 55534,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 55930,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StopTransaction",
+      "payload": {
+        "transactionId": 225,
+        "meterStop": 0,
+        "timestamp": "2025-08-23T23:01:10.014Z",
+        "reason": "Local"
+      },
+      "timestamp": 1755990070014
+    },
+    {
+      "t": 55932,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:StopTransaction",
+      "payload": {}
+    },
+    {
+      "t": 56047,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "StopTransactionResult",
+      "payload": {
+        "idTagInfo": {
+          "status": "Accepted"
+        }
+      },
+      "timestamp": 1755990070131
+    },
+    {
+      "t": 57534,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    },
+    {
+      "t": 57763,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "session:LEAVE",
+      "payload": {}
+    },
+    {
+      "t": 58537,
+      "cpId": "sim-1755990016594-7s1b",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.645,
+        "powerOfferedKw": 7.36,
+        "socPercent": 20.1
+      }
+    }
+  ],
+  "metadata": {
+    "name": "rec_1755989614178",
+    "description": "",
+    "tags": [],
+    "config": {
+      "url": ""
+    },
+    "startedAt": "2025-08-23T23:00:14.084Z",
+    "url": "",
+    "endedAt": "2025-08-23T23:01:13.619Z",
+    "durationMs": 59535
+  },
+  "expected": {}
+}

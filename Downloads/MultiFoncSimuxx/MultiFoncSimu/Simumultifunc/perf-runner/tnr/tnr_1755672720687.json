@@ -1,0 +1,173 @@
+{
+  "id": "tnr_1755672720687",
+  "name": "record-1755672620159",
+  "createdAt": "2025-08-20T06:52:01.974Z",
+  "config": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+  },
+  "sessions": [
+    {
+      "id": "S1",
+      "cpId": "avsevse001",
+      "idTag": "TAG-TNR"
+    },
+    {
+      "id": "S2",
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "idTag": "TAG-TNR"
+    }
+  ],
+  "events": [
+    {
+      "t": 10647,
+      "cpId": "avsevse001",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "avsevse001",
+        "chargeBoxSerialNumber": "avsevse001",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-avsevse001"
+      }
+    },
+    {
+      "t": 10690,
+      "cpId": "avsevse001",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Rejected",
+        "currentTime": "2025-08-20T06:50:30.697Z",
+        "interval": 300
+      }
+    },
+    {
+      "t": 50028,
+      "cpId": "avsevse001",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "avsevse001",
+        "chargeBoxSerialNumber": "avsevse001",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-avsevse001"
+      }
+    },
+    {
+      "t": 50131,
+      "cpId": "avsevse001",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Rejected",
+        "currentTime": "2025-08-20T06:51:10.114Z",
+        "interval": 300
+      }
+    },
+    {
+      "t": 57632,
+      "cpId": "avsevse001",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "avsevse001",
+        "chargeBoxSerialNumber": "avsevse001",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-avsevse001"
+      }
+    },
+    {
+      "t": 57735,
+      "cpId": "avsevse001",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Rejected",
+        "currentTime": "2025-08-20T06:51:17.684Z",
+        "interval": 300
+      }
+    },
+    {
+      "t": 78396,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "chargeBoxSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-POP-REGULATION-TEST-TOMY2"
+      }
+    },
+    {
+      "t": 78462,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Accepted",
+        "currentTime": "2025-08-20T06:51:38.474Z",
+        "interval": 300
+      }
+    },
+    {
+      "t": 78598,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      }
+    },
+    {
+      "t": 85860,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "chargeBoxSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-POP-REGULATION-TEST-TOMY2"
+      }
+    },
+    {
+      "t": 85999,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "BootNotificationResult",
+      "payload": {
+        "status": "Accepted",
+        "currentTime": "2025-08-20T06:51:45.937Z",
+        "interval": 300
+      }
+    },
+    {
+      "t": 86000,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cs->cp",
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      }
+    }
+  ],
+  "expected": {}
+}

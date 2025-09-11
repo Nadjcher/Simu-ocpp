@@ -1,0 +1,27 @@
+{
+  "id": "tnr_1756158990996",
+  "name": "record-21:56:29",
+  "description": "",
+  "tags": [],
+  "folder": "",
+  "createdAt": "2025-08-25T21:56:30.996Z",
+  "config": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+  },
+  "sessions": [],
+  "events": [],
+  "metadata": {
+    "name": "record-21:56:29",
+    "description": "",
+    "tags": [],
+    "folder": "",
+    "config": {
+      "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+    },
+    "startedAt": "2025-08-25T21:56:29.762Z",
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket",
+    "endedAt": "2025-08-25T21:56:30.995Z",
+    "durationMs": 1233
+  },
+  "expected": {}
+}

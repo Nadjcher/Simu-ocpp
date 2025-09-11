@@ -1,0 +1,27 @@
+{
+  "executionId": "exec_1755983549102_41p5",
+  "scenarioId": "tnr_1755808031512",
+  "startedAt": "2025-08-23T21:12:29.102Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "23:12:29",
+      "line": "🚀 Starting replay of scenario: rec_1755808031512"
+    },
+    {
+      "ts": "23:12:29",
+      "line": "❌ Replay error: No URL in scenario config (set OCPP_URL or pass ?url=...)"
+    }
+  ],
+  "error": "No URL in scenario config (set OCPP_URL or pass ?url=...)",
+  "passed": false,
+  "finishedAt": "2025-08-23T21:12:29.103Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 1
+  }
+}

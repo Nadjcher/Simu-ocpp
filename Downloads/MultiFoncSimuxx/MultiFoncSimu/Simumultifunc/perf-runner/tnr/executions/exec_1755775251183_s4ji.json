@@ -1,0 +1,23 @@
+{
+  "executionId": "exec_1755775251183_s4ji",
+  "scenarioId": "tnr_1755775154833",
+  "startedAt": "2025-08-21T11:20:51.183Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "13:20:51",
+      "line": "Starting replay of scenario: rec_1755775154833"
+    }
+  ],
+  "error": "No URL in scenario config",
+  "passed": false,
+  "finishedAt": "2025-08-21T11:20:51.184Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 1
+  }
+}

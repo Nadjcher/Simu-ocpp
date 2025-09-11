@@ -1,0 +1,23 @@
+{
+  "executionId": "exec_1755797167299_yrgv",
+  "scenarioId": "tnr_1755797088763",
+  "startedAt": "2025-08-21T17:26:07.299Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "19:26:07",
+      "line": "Starting replay of scenario: rec_1755797088763"
+    }
+  ],
+  "error": "No URL in scenario config",
+  "passed": false,
+  "finishedAt": "2025-08-21T17:26:07.299Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 0
+  }
+}

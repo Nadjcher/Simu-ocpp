@@ -1,0 +1,360 @@
+{
+  "executionId": "exec_1757614480272_qz9y",
+  "scenarioId": "tnr_1757601583928_yrfm1n",
+  "startedAt": "2025-09-11T18:14:40.272Z",
+  "status": "success",
+  "events": [
+    {
+      "t": 3108,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient"
+      },
+      "timestamp": 1757601466645,
+      "replayedAt": 1757614480851
+    },
+    {
+      "t": 4493,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Available",
+        "errorCode": "NoError",
+        "timestamp": "2025-09-11T14:37:48.030Z"
+      },
+      "timestamp": 1757601468030,
+      "replayedAt": 1757614480953
+    },
+    {
+      "t": 5797,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StatusNotification",
+      "payload": {
+        "connectorId": 1,
+        "status": "Preparing",
+        "errorCode": "NoError",
+        "timestamp": "2025-09-11T14:37:49.334Z"
+      },
+      "timestamp": 1757601469334,
+      "replayedAt": 1757614481061
+    },
+    {
+      "t": 7028,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "Authorize",
+      "payload": {
+        "idTag": "TAG-001"
+      },
+      "timestamp": 1757601470565,
+      "replayedAt": 1757614481162
+    },
+    {
+      "t": 8243,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "idTag": "TAG-001",
+        "meterStart": 0,
+        "timestamp": "2025-09-11T14:37:51.780Z"
+      },
+      "timestamp": 1757601471780,
+      "replayedAt": 1757614481263
+    }
+  ],
+  "serverCalls": [
+    {
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "timestamp": 1757614481031,
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      }
+    },
+    {
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "timestamp": 1757614481074,
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      }
+    }
+  ],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "20:14:40",
+      "line": "▶ Starting replay of scenario: record-aaa"
+    },
+    {
+      "ts": "20:14:40",
+      "line": " Using OCPP URL: wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+    },
+    {
+      "ts": "20:14:40",
+      "line": " Connecting 2 sessions..."
+    },
+    {
+      "ts": "20:14:40",
+      "line": " Connected: sim-1757601466224-6tu1 with idTag: TAG-001"
+    },
+    {
+      "ts": "20:14:40",
+      "line": " Connected: POP-REGULATION-TEST-TOMY2 with idTag: TAG-001"
+    },
+    {
+      "ts": "20:14:40",
+      "line": "▶ Replaying 23 events..."
+    },
+    {
+      "ts": "20:14:40",
+      "line": "ℹ Replay plan: 5 events to replay"
+    },
+    {
+      "ts": "20:14:40",
+      "line": "▶ POP-REGULATION-TEST-TOMY2 → BootNotification (idTag: N/A)"
+    },
+    {
+      "ts": "20:14:40",
+      "line": " BootNotification sent successfully"
+    },
+    {
+      "ts": "20:14:40",
+      "line": "▶ POP-REGULATION-TEST-TOMY2 → StatusNotification (idTag: N/A)"
+    },
+    {
+      "ts": "20:14:40",
+      "line": " StatusNotification sent successfully"
+    },
+    {
+      "ts": "20:14:41",
+      "line": "▶ POP-REGULATION-TEST-TOMY2 → StatusNotification (idTag: N/A)"
+    },
+    {
+      "ts": "20:14:41",
+      "line": " StatusNotification sent successfully"
+    },
+    {
+      "ts": "20:14:41",
+      "line": "▶ POP-REGULATION-TEST-TOMY2 → Authorize (idTag: TAG-001)"
+    },
+    {
+      "ts": "20:14:41",
+      "line": " Authorize sent successfully"
+    },
+    {
+      "ts": "20:14:41",
+      "line": "▶ POP-REGULATION-TEST-TOMY2 → StartTransaction (idTag: TAG-001)"
+    },
+    {
+      "ts": "20:14:41",
+      "line": " StartTransaction sent successfully"
+    },
+    {
+      "ts": "20:14:43",
+      "line": " Closed sim-1757601466224-6tu1"
+    },
+    {
+      "ts": "20:14:43",
+      "line": " Closed POP-REGULATION-TEST-TOMY2"
+    },
+    {
+      "ts": "20:14:43",
+      "line": " Server calls captured: 2"
+    },
+    {
+      "ts": "20:14:43",
+      "line": "🔍 Comparing..."
+    },
+    {
+      "ts": "20:14:43",
+      "line": "ℹ No baseline"
+    },
+    {
+      "ts": "20:14:43",
+      "line": "✅ Replay PASSED"
+    }
+  ],
+  "replayCfg": {
+    "realtime": true,
+    "speed": 1,
+    "mode": "realtime"
+  },
+  "inputs": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket",
+    "sessions": [
+      {
+        "id": "session_sim-1757601466224-6tu1_1757601583932",
+        "cpId": "sim-1757601466224-6tu1",
+        "idTag": "TAG-001",
+        "steps": [
+          {
+            "at": 2851,
+            "type": "ui",
+            "action": "CONNECT",
+            "payload": {
+              "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket/POP-REGULATION-TEST-TOMY2",
+              "cpId": "POP-REGULATION-TEST-TOMY2",
+              "idTag": "TAG-001",
+              "evseType": "ac-mono",
+              "maxA": 32
+            }
+          },
+          {
+            "at": 4497,
+            "type": "ui",
+            "action": "PARK",
+            "payload": {}
+          },
+          {
+            "at": 5800,
+            "type": "ui",
+            "action": "PLUG",
+            "payload": {}
+          },
+          {
+            "at": 7032,
+            "type": "ui",
+            "action": "Authorize",
+            "payload": {
+              "idTag": "TAG-001"
+            }
+          },
+          {
+            "at": 8254,
+            "type": "ui",
+            "action": "StartTransaction",
+            "payload": {
+              "connectorId": 1,
+              "mvEvery": 10
+            }
+          },
+          {
+            "at": 8848,
+            "type": "ui",
+            "action": "MeterValues",
+            "payload": {}
+          },
+          {
+            "at": 16860,
+            "type": "ui",
+            "action": "MeterValues",
+            "payload": {}
+          },
+          {
+            "at": 17386,
+            "type": "ui",
+            "action": "StartTransaction",
+            "payload": {
+              "connectorId": 1,
+              "mvEvery": 10
+            }
+          },
+          {
+            "at": 115244,
+            "type": "ui",
+            "action": "Authorize",
+            "payload": {
+              "idTag": "TAG-001"
+            }
+          }
+        ],
+        "metadata": {
+          "firstEventTime": 2851,
+          "lastEventTime": 115244,
+          "totalEvents": 9
+        }
+      },
+      {
+        "id": "session_POP-REGULATION-TEST-TOMY2_1757601583932",
+        "cpId": "POP-REGULATION-TEST-TOMY2",
+        "idTag": "TAG-001",
+        "steps": [
+          {
+            "at": 3108,
+            "type": "send",
+            "action": "BootNotification",
+            "payload": {
+              "chargePointVendor": "EVSE Simulator",
+              "chargePointModel": "PerfClient"
+            }
+          },
+          {
+            "at": 4493,
+            "type": "send",
+            "action": "StatusNotification",
+            "payload": {
+              "connectorId": 1,
+              "status": "Available",
+              "errorCode": "NoError",
+              "timestamp": "2025-09-11T14:37:48.030Z"
+            }
+          },
+          {
+            "at": 5797,
+            "type": "send",
+            "action": "StatusNotification",
+            "payload": {
+              "connectorId": 1,
+              "status": "Preparing",
+              "errorCode": "NoError",
+              "timestamp": "2025-09-11T14:37:49.334Z"
+            }
+          },
+          {
+            "at": 7028,
+            "type": "send",
+            "action": "Authorize",
+            "payload": {
+              "idTag": "TAG-001"
+            }
+          },
+          {
+            "at": 8243,
+            "type": "send",
+            "action": "StartTransaction",
+            "payload": {
+              "connectorId": 1,
+              "idTag": "TAG-001",
+              "meterStart": 0,
+              "timestamp": "2025-09-11T14:37:51.780Z"
+            }
+          }
+        ],
+        "metadata": {
+          "firstEventTime": 3108,
+          "lastEventTime": 8243,
+          "totalEvents": 14
+        }
+      }
+    ],
+    "compare": {},
+    "baseline": {
+      "hasEvents": false,
+      "hasServerCalls": false
+    }
+  },
+  "performanceAnalysis": {
+    "originalDuration": 120395,
+    "replayDuration": 3002,
+    "overhead": -117393
+  },
+  "passed": true,
+  "finishedAt": "2025-09-11T18:14:43.275Z",
+  "metrics": {
+    "totalEvents": 5,
+    "differences": 0,
+    "serverCalls": 2,
+    "duration": 3003
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "executionId": "exec_1755762371895_h5i0",
+  "scenarioId": "tnr_1755762232406",
+  "startedAt": "2025-08-21T07:46:11.895Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "09:46:11",
+      "line": "Starting replay of scenario: testmmm"
+    }
+  ],
+  "error": "No URL in scenario config",
+  "passed": false,
+  "finishedAt": "2025-08-21T07:46:11.895Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 0
+  }
+}

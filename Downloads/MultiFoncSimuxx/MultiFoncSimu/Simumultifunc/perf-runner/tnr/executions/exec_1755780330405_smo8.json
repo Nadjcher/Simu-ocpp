@@ -1,0 +1,18 @@
+{
+  "executionId": "exec_1755780330405_smo8",
+  "scenarioId": "tnr_1755775154833",
+  "startedAt": "2025-08-21T12:45:30.405Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [],
+  "passed": false,
+  "error": "No URL in scenario config",
+  "finishedAt": "2025-08-21T12:45:30.406Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 1
+  }
+}

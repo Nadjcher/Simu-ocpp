@@ -1,0 +1,673 @@
+{
+  "executionId": "exec_1756071252007_b7fc",
+  "scenarioId": "tnr_1756071178789",
+  "startedAt": "2025-08-24T21:34:12.007Z",
+  "status": "success",
+  "events": [
+    {
+      "t": 2686,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "BootNotification",
+      "payload": {
+        "chargePointVendor": "EVSE Simulator",
+        "chargePointModel": "PerfClient",
+        "chargePointSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "chargeBoxSerialNumber": "POP-REGULATION-TEST-TOMY2",
+        "firmwareVersion": "perf",
+        "meterType": "AC",
+        "meterSerialNumber": "METER-POP-REGULATION-TEST-TOMY2"
+      },
+      "timestamp": 1756071186158,
+      "replayedAt": 1756071254990
+    },
+    {
+      "t": 10932,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "Authorize",
+      "payload": {
+        "idTag": "AVSE-TAG-001"
+      },
+      "timestamp": 1756071194404,
+      "replayedAt": 1756071263465
+    },
+    {
+      "t": 10935,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "session:Authorize",
+      "payload": {
+        "idTag": "AVSE-TAG-001"
+      },
+      "replayedAt": 1756071263670
+    },
+    {
+      "t": 13964,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "idTag": "AVSE-TAG-001",
+        "meterStart": 0,
+        "timestamp": "2025-08-24T21:33:17.436Z"
+      },
+      "timestamp": 1756071197436,
+      "replayedAt": 1756071266834
+    },
+    {
+      "t": 13969,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "session:StartTransaction",
+      "payload": {
+        "connectorId": 1,
+        "mvEvery": 10
+      },
+      "replayedAt": 1756071267166
+    },
+    {
+      "t": 24143,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 238,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-24T21:33:27.615Z",
+            "sampledValue": [
+              {
+                "value": "21",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7243",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1756071207615,
+      "replayedAt": 1756071277464
+    },
+    {
+      "t": 24147,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071277561
+    },
+    {
+      "t": 26147,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071279709
+    },
+    {
+      "t": 28139,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071281752
+    },
+    {
+      "t": 29149,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071282894
+    },
+    {
+      "t": 31140,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071284951
+    },
+    {
+      "t": 33145,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.243,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071287057
+    },
+    {
+      "t": 34146,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "MeterValues",
+      "payload": {
+        "connectorId": 1,
+        "transactionId": 238,
+        "meterValue": [
+          {
+            "timestamp": "2025-08-24T21:33:37.618Z",
+            "sampledValue": [
+              {
+                "value": "41",
+                "measurand": "Energy.Active.Import.Register",
+                "unit": "Wh",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7228",
+                "measurand": "Power.Active.Import",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "7360",
+                "measurand": "Power.Offered",
+                "unit": "W",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "32.2",
+                "measurand": "Current.Import",
+                "unit": "A",
+                "context": "Sample.Periodic"
+              },
+              {
+                "value": "230",
+                "measurand": "Voltage",
+                "unit": "V",
+                "context": "Sample.Periodic"
+              }
+            ]
+          }
+        ]
+      },
+      "timestamp": 1756071217618,
+      "replayedAt": 1756071288142
+    },
+    {
+      "t": 34152,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071288243
+    },
+    {
+      "t": 36145,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071290309
+    },
+    {
+      "t": 38142,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071292390
+    },
+    {
+      "t": 40146,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071294537
+    },
+    {
+      "t": 40761,
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "dir": "cp->cs",
+      "action": "StopTransaction",
+      "payload": {
+        "transactionId": 238,
+        "meterStop": 0,
+        "timestamp": "2025-08-24T21:33:44.233Z",
+        "reason": "Local"
+      },
+      "timestamp": 1756071224233,
+      "replayedAt": 1756071295227
+    },
+    {
+      "t": 40762,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "session:StopTransaction",
+      "payload": {},
+      "replayedAt": 1756071295302
+    },
+    {
+      "t": 42139,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071296742
+    },
+    {
+      "t": 43152,
+      "cpId": "sim-1756071185562-604c",
+      "dir": "ui",
+      "action": "meter:MeterValues",
+      "payload": {
+        "powerActiveKw": 7.228,
+        "powerOfferedKw": 7.36
+      },
+      "replayedAt": 1756071297903
+    }
+  ],
+  "serverCalls": [
+    {
+      "cpId": "POP-REGULATION-TEST-TOMY2",
+      "timestamp": 1756071255092,
+      "action": "ChangeAvailability",
+      "payload": {
+        "connectorId": 1,
+        "type": "Inoperative"
+      }
+    }
+  ],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "23:34:12",
+      "line": "🚀 Starting replay of scenario: rec_1756071178789"
+    },
+    {
+      "ts": "23:34:12",
+      "line": "🔗 Using OCPP URL: wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+    },
+    {
+      "ts": "23:34:12",
+      "line": "📡 Connecting 1 sessions..."
+    },
+    {
+      "ts": "23:34:12",
+      "line": "✅ Connected session: POP-REGULATION-TEST-TOMY2"
+    },
+    {
+      "ts": "23:34:12",
+      "line": "🎬 Replaying 28 events..."
+    },
+    {
+      "ts": "23:34:12",
+      "line": "⏳ Waiting 2686ms"
+    },
+    {
+      "ts": "23:34:14",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → BootNotification {\"chargePointVendor\":\"EVSE Simulator\",\"chargePointModel\":\"PerfClient\",\"chargePointSerialNumber\":\"POP-REGULATION-TEST-TOMY2\",\"chargeBoxSerial"
+    },
+    {
+      "ts": "23:34:14",
+      "line": "✅ BootNotification sent"
+    },
+    {
+      "ts": "23:34:14",
+      "line": "⏳ Waiting 83ms"
+    },
+    {
+      "ts": "23:34:15",
+      "line": "⏳ Waiting 264ms"
+    },
+    {
+      "ts": "23:34:15",
+      "line": "⏳ Waiting 7899ms"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → Authorize {\"idTag\":\"AVSE-TAG-001\"}"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "✅ Authorize sent"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "⏳ Waiting 3ms"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "🖱️ UI → Authorize"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "✅ Authorize sent"
+    },
+    {
+      "ts": "23:34:23",
+      "line": "⏳ Waiting 437ms"
+    },
+    {
+      "ts": "23:34:24",
+      "line": "⏳ Waiting 2592ms"
+    },
+    {
+      "ts": "23:34:26",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → StartTransaction {\"connectorId\":1,\"idTag\":\"AVSE-TAG-001\",\"meterStart\":0,\"timestamp\":\"2025-08-24T21:33:17.436Z\"}"
+    },
+    {
+      "ts": "23:34:26",
+      "line": "✅ StartTransaction sent"
+    },
+    {
+      "ts": "23:34:26",
+      "line": "⏳ Waiting 5ms"
+    },
+    {
+      "ts": "23:34:26",
+      "line": "🖱️ UI → StartTransaction"
+    },
+    {
+      "ts": "23:34:27",
+      "line": "✅ StartTransaction sent"
+    },
+    {
+      "ts": "23:34:27",
+      "line": "⏳ Waiting 169ms"
+    },
+    {
+      "ts": "23:34:27",
+      "line": "⏳ Waiting 10005ms"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → MeterValues {\"connectorId\":1,\"transactionId\":238,\"meterValue\":[{\"timestamp\":\"2025-08-24T21:33:27.615Z\",\"sampledValue\":[{\"value\":\"21\",\"measurand\":\"Energy"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "✅ MeterValues sent"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "⏳ Waiting 4ms"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "⏳ Waiting 52ms"
+    },
+    {
+      "ts": "23:34:37",
+      "line": "⏳ Waiting 1948ms"
+    },
+    {
+      "ts": "23:34:39",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:39",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:39",
+      "line": "⏳ Waiting 1992ms"
+    },
+    {
+      "ts": "23:34:41",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:41",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:41",
+      "line": "⏳ Waiting 1010ms"
+    },
+    {
+      "ts": "23:34:42",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:42",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:42",
+      "line": "⏳ Waiting 1991ms"
+    },
+    {
+      "ts": "23:34:44",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:44",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:44",
+      "line": "⏳ Waiting 2005ms"
+    },
+    {
+      "ts": "23:34:46",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:47",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:47",
+      "line": "⏳ Waiting 1001ms"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → MeterValues {\"connectorId\":1,\"transactionId\":238,\"meterValue\":[{\"timestamp\":\"2025-08-24T21:33:37.618Z\",\"sampledValue\":[{\"value\":\"41\",\"measurand\":\"Energy"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "✅ MeterValues sent"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "⏳ Waiting 6ms"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "⏳ Waiting 122ms"
+    },
+    {
+      "ts": "23:34:48",
+      "line": "⏳ Waiting 1871ms"
+    },
+    {
+      "ts": "23:34:50",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:50",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:50",
+      "line": "⏳ Waiting 1997ms"
+    },
+    {
+      "ts": "23:34:52",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:52",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:52",
+      "line": "⏳ Waiting 2004ms"
+    },
+    {
+      "ts": "23:34:54",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:54",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:54",
+      "line": "⏳ Waiting 615ms"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "▶️ POP-REGULATION-TEST-TOMY2 → StopTransaction {\"transactionId\":238,\"meterStop\":0,\"timestamp\":\"2025-08-24T21:33:44.233Z\",\"reason\":\"Local\"}"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "✅ StopTransaction sent"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "⏳ Waiting 1ms"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "🖱️ UI → StopTransaction"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "✅ StopTransaction sent"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "⏳ Waiting 229ms"
+    },
+    {
+      "ts": "23:34:55",
+      "line": "⏳ Waiting 1148ms"
+    },
+    {
+      "ts": "23:34:56",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:56",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:56",
+      "line": "⏳ Waiting 1013ms"
+    },
+    {
+      "ts": "23:34:57",
+      "line": "🖱️ UI → MeterValues"
+    },
+    {
+      "ts": "23:34:57",
+      "line": "✅ MeterValues sent (2)"
+    },
+    {
+      "ts": "23:34:57",
+      "line": "⏳ Waiting 2s before closing..."
+    },
+    {
+      "ts": "23:34:59",
+      "line": "🔌 Closed POP-REGULATION-TEST-TOMY2"
+    },
+    {
+      "ts": "23:34:59",
+      "line": "📥 Server calls captured: 1"
+    },
+    {
+      "ts": "23:34:59",
+      "line": "🔍 Comparing..."
+    },
+    {
+      "ts": "23:34:59",
+      "line": "ℹ️ No baseline"
+    },
+    {
+      "ts": "23:34:59",
+      "line": "✅ Replay PASSED"
+    }
+  ],
+  "replayCfg": {
+    "realtime": true,
+    "speed": 1
+  },
+  "passed": true,
+  "finishedAt": "2025-08-24T21:34:59.907Z",
+  "metrics": {
+    "totalEvents": 21,
+    "differences": 0,
+    "serverCalls": 1,
+    "duration": 47900
+  }
+}

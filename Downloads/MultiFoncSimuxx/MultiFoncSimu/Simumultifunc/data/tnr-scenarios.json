@@ -1,0 +1,162 @@
+{
+  "scenarios": [
+    {
+      "id": "scenario-001",
+      "name": "Charge complète standard",
+      "description": "Scénario de charge complète de 20% à 80% SoC",
+      "createdAt": "2024-01-15T10:00:00Z",
+      "status": "READY",
+      "steps": [
+        {
+          "action": "connect",
+          "delay": 0,
+          "sessionId": "session-1",
+          "parameters": {
+            "url": "ws://localhost:8090/ocpp",
+            "chargePointId": "CP001"
+          },
+          "expectedResponse": {
+            "status": "Accepted"
+          }
+        },
+        {
+          "action": "bootNotification",
+          "delay": 1000,
+          "sessionId": "session-1",
+          "parameters": {
+            "chargePointModel": "EVSE Simulator",
+            "chargePointVendor": "SimCorp"
+          },
+          "expectedResponse": {
+            "status": "Accepted"
+          }
+        },
+        {
+          "action": "park",
+          "delay": 2000,
+          "sessionId": "session-1",
+          "parameters": {},
+          "expectedResponse": {
+            "parked": true
+          }
+        },
+        {
+          "action": "plug",
+          "delay": 3000,
+          "sessionId": "session-1",
+          "parameters": {},
+          "expectedResponse": {
+            "plugged": true
+          }
+        },
+        {
+          "action": "authorize",
+          "delay": 5000,
+          "sessionId": "session-1",
+          "parameters": {
+            "idTag": "TEST-BADGE-001"
+          },
+          "expectedResponse": {
+            "idTagInfo": {
+              "status": "Accepted"
+            }
+          }
+        },
+        {
+          "action": "startTransaction",
+          "delay": 7000,
+          "sessionId": "session-1",
+          "parameters": {
+            "connectorId": 1,
+            "idTag": "TEST-BADGE-001",
+            "meterStart": 0
+          },
+          "expectedResponse": {
+            "idTagInfo": {
+              "status": "Accepted"
+            },
+            "transactionId": "*"
+          }
+        },
+        {
+          "action": "wait",
+          "delay": 30000,
+          "sessionId": "session-1",
+          "parameters": {
+            "targetSoc": 80
+          },
+          "expectedResponse": {}
+        },
+        {
+          "action": "stopTransaction",
+          "delay": 1000,
+          "sessionId": "session-1",
+          "parameters": {
+            "reason": "Local"
+          },
+          "expectedResponse": {
+            "idTagInfo": {
+              "status": "Accepted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenario-002",
+      "name": "Test d'interruption",
+      "description": "Test d'interruption et reprise de charge",
+      "createdAt": "2024-01-16T14:30:00Z",
+      "status": "READY",
+      "steps": [
+        {
+          "action": "connect",
+          "delay": 0,
+          "sessionId": "session-2",
+          "parameters": {
+            "url": "ws://localhost:8090/ocpp",
+            "chargePointId": "CP002"
+          }
+        },
+        {
+          "action": "startTransaction",
+          "delay": 5000,
+          "sessionId": "session-2",
+          "parameters": {
+            "connectorId": 1,
+            "idTag": "TEST-BADGE-002"
+          }
+        },
+        {
+          "action": "wait",
+          "delay": 10000,
+          "sessionId": "session-2",
+          "parameters": {}
+        },
+        {
+          "action": "stopTransaction",
+          "delay": 1000,
+          "sessionId": "session-2",
+          "parameters": {
+            "reason": "EVDisconnected"
+          }
+        },
+        {
+          "action": "wait",
+          "delay": 5000,
+          "sessionId": "session-2",
+          "parameters": {}
+        },
+        {
+          "action": "startTransaction",
+          "delay": 1000,
+          "sessionId": "session-2",
+          "parameters": {
+            "connectorId": 1,
+            "idTag": "TEST-BADGE-002"
+          }
+        }
+      ]
+    }
+  ]
+}

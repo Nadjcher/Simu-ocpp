@@ -1,0 +1,27 @@
+{
+  "executionId": "exec_1755808155390_9e9a",
+  "scenarioId": "tnr_1755807981088",
+  "startedAt": "2025-08-21T20:29:15.390Z",
+  "status": "error",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "22:29:15",
+      "line": "🚀 Starting replay of scenario: rec_1755807981088"
+    },
+    {
+      "ts": "22:29:15",
+      "line": "❌ Replay error: No URL in scenario config"
+    }
+  ],
+  "error": "No URL in scenario config",
+  "passed": false,
+  "finishedAt": "2025-08-21T20:29:15.391Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "duration": 1
+  }
+}

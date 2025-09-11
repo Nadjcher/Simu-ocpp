@@ -1,0 +1,90 @@
+{
+  "executionId": "exec_1756217293290_5p0h",
+  "scenarioId": "tnr_1756158990996",
+  "startedAt": "2025-08-26T14:08:13.290Z",
+  "status": "success",
+  "events": [],
+  "serverCalls": [],
+  "differences": [],
+  "logs": [
+    {
+      "ts": "16:08:13",
+      "line": "🚀 Starting replay of scenario: record-21:56:29"
+    },
+    {
+      "ts": "16:08:13",
+      "line": "🔗 Using OCPP URL: wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+    },
+    {
+      "ts": "16:08:13",
+      "line": "ℹ️ Sessions inferred from events: "
+    },
+    {
+      "ts": "16:08:13",
+      "line": "📡 Connecting 0 sessions..."
+    },
+    {
+      "ts": "16:08:13",
+      "line": "🎬 Replaying 0 events..."
+    },
+    {
+      "ts": "16:08:13",
+      "line": "ℹ️ Effective plan: 0 cp->cs events (ui ignored, dedup applied)"
+    },
+    {
+      "ts": "16:08:13",
+      "line": "⏳ Waiting 2s before closing..."
+    },
+    {
+      "ts": "16:08:15",
+      "line": "📥 Server calls captured: 0"
+    },
+    {
+      "ts": "16:08:15",
+      "line": "📊 Comparing..."
+    },
+    {
+      "ts": "16:08:15",
+      "line": "ℹ️ No baseline"
+    },
+    {
+      "ts": "16:08:15",
+      "line": "✅ Replay PASSED"
+    }
+  ],
+  "replayCfg": {
+    "realtime": true,
+    "speed": 1,
+    "mode": "fast"
+  },
+  "inputs": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket",
+    "sessions": [],
+    "compare": {
+      "strictOrder": true,
+      "strictCount": true,
+      "tolerance": 0.1,
+      "ignoreKeys": [],
+      "allowExtras": true
+    },
+    "baseline": {
+      "hasEvents": false,
+      "hasServerCalls": false
+    }
+  },
+  "performanceAnalysis": {
+    "originalDuration": 1233,
+    "replayDuration": 2015,
+    "overhead": 782,
+    "averageLatency": 0,
+    "slowestEvents": []
+  },
+  "passed": true,
+  "finishedAt": "2025-08-26T14:08:15.306Z",
+  "metrics": {
+    "totalEvents": 0,
+    "differences": 0,
+    "serverCalls": 0,
+    "duration": 2016
+  }
+}
