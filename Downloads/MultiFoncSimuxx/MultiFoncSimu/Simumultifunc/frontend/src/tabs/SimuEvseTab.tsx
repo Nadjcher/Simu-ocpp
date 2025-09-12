@@ -1157,7 +1157,12 @@ export default function SimuEvseTab() {
   const toasts = useToasts();
 
   // ========= 2. ÉTATS NÉCESSAIRES POUR TNR =========
-  const [cpUrl, setCpUrl] = useState("wss://evse-test.total-ev-charge.com/ocpp/WebSocket");
+  const [environment, setEnvironment] = useState<"test" | "pp">("test");
+  const ENV_URLS = {
+    test: "wss://evse-test.total-ev-charge.com/ocpp/WebSocket",
+    pp: "wss://evse-pp.total-ev-charge.com/ocpp/WebSocket"
+  };
+  const cpUrl = ENV_URLS[environment];
 
   // ========= 3. HOOK TNR (après toasts et cpUrl) =========
   const tnr = useTNRWithAPI(toasts, cpUrl);
@@ -2013,18 +2018,33 @@ export default function SimuEvseTab() {
           {/* Panneau gauche */}
           <div className="col-span-4 rounded border bg-white p-4 shadow-sm">
             <div className="font-semibold mb-2">Connexion OCPP</div>
-            <div className="text-xs mb-1">OCPP WebSocket URL</div>
-            <input
-                className="w-full border rounded px-2 py-1 mb-2"
-                value={cpUrl}
-                onChange={(e) => setCpUrl(e.target.value)}
-            />
+
+            {/* Dropdown environnement - AJOUT ICI */}
+            <div className="text-xs mb-1">Environnement</div>
+            <select
+                className="w-full border rounded px-2 py-1 mb-2 bg-white cursor-pointer"
+                value={environment}
+                onChange={(e) => setEnvironment(e.target.value as "test" | "pp")}
+            >
+              <option value="test">Test</option>
+              <option value="pp">PP</option>
+            </select>
+
+            {/* URL non-éditable - REMPLACE L'INPUT */}
+            <div className="text-xs mb-1 text-gray-500">OCPP WebSocket URL</div>
+            <div className="w-full border rounded px-2 py-1 mb-2 bg-gray-100 text-gray-700 text-sm">
+              {cpUrl}
+            </div>
+
+            {/* CP-ID reste éditable */}
             <div className="text-xs mb-1">CP-ID</div>
             <input
                 className="w-full border rounded px-2 py-1 mb-3"
                 value={cpId}
                 onChange={(e) => setCpId(e.target.value)}
             />
+
+            {/* Boutons de connexion */}
             <div className="flex gap-2">
               <button
                   onClick={onConnect}
@@ -2041,6 +2061,7 @@ export default function SimuEvseTab() {
               </button>
             </div>
 
+            {/* Status et Transaction */}
             <div className="mt-4 grid grid-cols-2 gap-2">
               <div className="rounded border p-2 bg-slate-50">
                 <div className="text-xs">Status</div>
@@ -2398,9 +2419,9 @@ export default function SimuEvseTab() {
                         <div
                             style={{
                               position: "absolute",
-                              left: 61,
+                              left: "7%",
                               top: "35%",
-                              transform: "translateY(-50%)",
+                              transform: "translate(-50%, -50%)",
                               zIndex: 80,
                             }}
                         >
@@ -2417,9 +2438,9 @@ export default function SimuEvseTab() {
                             <div
                                 style={{
                                   position: "absolute",
-                                  right: 173 ,
+                                  right: "24%" ,
                                   top: "35%",
-                                  transform: "translateY(-50%)",
+                                  transform: "translate(-50%, -50%)",
                                   zIndex: 80,
                                 }}
                             >
