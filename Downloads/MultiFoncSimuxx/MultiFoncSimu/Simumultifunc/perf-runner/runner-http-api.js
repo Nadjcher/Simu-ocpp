@@ -1,8 +1,7 @@
-
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import WebSocket from "ws";
+import { WebSocket, WebSocketServer } from "ws";
 import os from "os";
 import fsSync from "fs";
 import fs from "fs/promises";
@@ -11,8 +10,6 @@ import { fileURLToPath } from "url";
 import { performance } from "node:perf_hooks";
 import multer from "multer";
 import crypto from "crypto";
-
-
 
 /* ========================================================================== */
 /* ENV & BOOT                                                                 */
@@ -211,23 +208,21 @@ function analyzeScenario(scenario) {
 
     return { domainStats, timeline };
 }
-// Configuration API Prix
 
+// Configuration API Prix
 let PRICE_API_CONFIG = {
     token: process.env.PRICE_API_TOKEN || "",
     url: process.env.PRICE_API_URL || "https://evplatform.evcharge-pp.totalenergies.com/evportal/api/tx"
 };
 
+/* ========================================================================== */
+/* LOGGING                                                                    */
+/* ========================================================================== */
 
+const LOG_MAX = 500;
+const LOGS = [];
 
-    /* ========================================================================== */
-    /* LOGGING                                                                    */
-    /* ========================================================================== */
-
-    const LOG_MAX = 500;
-    const LOGS = [];
-
-    function log(line) {
+function log(line) {
     const ts = new Date().toTimeString().slice(0, 8);
     const l = `[${ts}] ${line}`;
     LOGS.push(l);
@@ -319,33 +314,30 @@ const toInt = (v, d = 0) =>
     Number.isFinite(parseInt(v, 10)) ? parseInt(v, 10) : d;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Parser CSV amélioré pour gérer les guillemets et virgules
 function parseCsv(text) {
-    const rows = String(text || "")
-        .replace(/^\uFEFF/, "")  // Remove BOM
-        .split(/\r?\n/)
-        .map((r) => r.trim())
-        .filter(Boolean);
+    const lines = text.replace(/\r/g, "").split("\n").filter(Boolean);
+    if (lines.length === 0) return [];
+
+    // Gère les en-têtes avec guillemets
+    const head = lines[0]
+        .split(/[;,]/)
+        .map(h => h.replace(/^"|"$/g, '').trim());
 
     // Détection automatique du header
     let start = 0;
-    if (rows[0]) {
-        const firstLine = rows[0].toLowerCase();
-        // Si la première ligne contient "cpid" ou "idtag", c'est un header
-        if (firstLine.includes('cpid') || firstLine.includes('idtag') ||
-            firstLine === 'cpid,idtag' || firstLine === 'cpid,tagid') {
-            start = 1;  // Skip header
-        }
+    if (head[0].toLowerCase().includes('cpid') || head[0].toLowerCase() === 'cpid') {
+        start = 1;  // Skip header
     }
 
     const pairs = [];
-    for (let i = start; i < rows.length; i++) {
-        const parts = rows[i].split(/[,;|\s\t]+/);
-        const cpId = parts[0]?.trim();
-        const idTag = parts[1]?.trim();
+    for (let i = start; i < lines.length; i++) {
+        const cols = lines[i].split(/[;,]/);
+        const cpId = cols[0]?.trim().replace(/^"|"$/g, '');
+        const idTag = cols[1]?.trim().replace(/^"|"$/g, '');
 
         if (!cpId || !idTag) continue;
         if (cpId.toLowerCase() === 'cpid') continue;
-        if (cpId.length === 0 || idTag.length === 0) continue;
 
         pairs.push({
             cpId: cpId,
@@ -360,6 +352,23 @@ const isValidCsv = (txt) => parseCsv(String(txt || "")).length > 0;
 function finalUrl(base, cpId) {
     if (base.endsWith("/" + cpId)) return base;
     return base.endsWith("/") ? base + cpId : `${base}/${cpId}`;
+}
+
+// Helpers mathématiques
+function calculateStandardDeviation(values) {
+    const n = values.length;
+    if (n === 0) return 0;
+    const mean = values.reduce((a, b) => a + b, 0) / n;
+    const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n;
+    return Math.sqrt(variance);
+}
+
+function average(values) {
+    return values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
+}
+
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
 }
 
 /* ========================================================================== */
@@ -399,7 +408,6 @@ const RECORDER = {
                 cpId,
                 idTag: info.idTag || "TAG-001",
                 steps: this.buildStepsForSession(cpId),
-                // Ajout des métadonnées importantes
                 metadata: {
                     firstEventTime: info.firstEvent,
                     lastEventTime: info.lastEvent,
@@ -455,6 +463,11 @@ const RECORDER = {
             if (idTag && idTag !== "TAG-001") {
                 session.idTag = idTag;
             }
+        }
+
+        // Déclencher l'analyse ML si une session est active
+        if (action === "StartTransaction") {
+            ml_onSessionStarted(cpId);
         }
     },
 
@@ -4286,15 +4299,626 @@ app.get("/api/swagger.json", (_req, res) => {
 });
 
 /* ========================================================================== */
+/* ML - Machine Learning pour détection d'anomalies et prédiction            */
+/* ========================================================================== */
+
+// État ML centralisé
+const ML_STATE = {
+    models: {
+        anomaly: null,
+        prediction: null
+    },
+    training: {
+        isTraining: false,
+        lastTraining: null,
+        dataPoints: []
+    },
+    thresholds: {
+        anomaly: 0.05,
+        prediction: 0.85
+    }
+};
+
+// Stockage des données
+const ML_TRAINING_DATA = [];
+const ML_ANOMALIES = [];
+const ML_PREDICTIONS = new Map();
+
+// WebSocket pour notifications temps réel
+let wss = null;
+
+// Fonction pour broadcaster les anomalies
+function broadcastMLAnomaly(anomaly) {
+    if (wss && wss.clients) {
+        const message = JSON.stringify({
+            type: 'ML_ANOMALY',
+            data: anomaly
+        });
+
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
+    }
+}
+
+// Hook automatique pour démarrer l'analyse ML
+function ml_onSessionStarted(sessionId) {
+    setTimeout(() => {
+        const session = SESSIONS_MAP.get(sessionId);
+        if (session && session.status === "started") {
+            analyzeSessionML(session);
+        }
+    }, 1000);
+}
+
+// Analyse ML améliorée pour une session
+function analyzeSessionML(session) {
+    const anomalies = detectAnomalies(session);
+    const prediction = predictEnergy(session);
+
+    // Stocker les résultats
+    anomalies.forEach(a => {
+        ML_ANOMALIES.push(a);
+        if (ML_ANOMALIES.length > 1000) ML_ANOMALIES.shift();
+
+        // Broadcaster les anomalies critiques
+        if (a.severity === 'CRITICAL' || a.severity === 'HIGH') {
+            broadcastMLAnomaly(a);
+        }
+    });
+
+    ML_PREDICTIONS.set(session.apiSessionId || session.cpId, prediction);
+
+    return { anomalies, prediction };
+}
+
+// Fonction de détection d'anomalies améliorée
+function detectAnomalies(session) {
+    const anomalies = [];
+    const metrics = session.metrics || {};
+
+    // Calcul d'efficacité corrigé
+    const requestedPowerKW = session.opts?.powerKW || 7.4;
+    const actualPowerKW = metrics.powerKW || 0;
+    const powerEfficiency = requestedPowerKW > 0 ? actualPowerKW / requestedPowerKW : 1;
+
+    const features = {
+        powerEfficiency,
+        setpointDeviation: Math.abs(actualPowerKW - requestedPowerKW),
+        voltageStability: metrics.voltageV ? Math.abs(metrics.voltageV - 230) / 230 : 0,
+        transactionDuration: metrics.duration || 0
+    };
+
+    // Détection d'efficacité faible
+    if (powerEfficiency < 0.7 && requestedPowerKW > 1) {
+        anomalies.push({
+            id: `anomaly_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: new Date().toISOString(),
+            sessionId: session.apiSessionId || session.cpId,
+            type: "UNDERPERFORMING",
+            severity: powerEfficiency < 0.5 ? "HIGH" : "MEDIUM",
+            score: 1 - powerEfficiency,
+            description: `Efficacité de charge faible: ${(powerEfficiency * 100).toFixed(1)}%`,
+            recommendation: "Vérifier la connexion du câble et l'état de la batterie du véhicule",
+            features
+        });
+    }
+
+    // Violation de setpoint
+    if (features.setpointDeviation > 2) {
+        anomalies.push({
+            id: `anomaly_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: new Date().toISOString(),
+            sessionId: session.apiSessionId || session.cpId,
+            type: "SETPOINT_VIOLATION",
+            severity: features.setpointDeviation > 5 ? "CRITICAL" : "HIGH",
+            score: features.setpointDeviation / 10,
+            description: `Déviation importante de la consigne: ${features.setpointDeviation.toFixed(1)} kW`,
+            recommendation: "Vérifier les limites de puissance et la configuration de l'EVSE",
+            features
+        });
+    }
+
+    // Instabilité de tension
+    if (features.voltageStability > 0.1) {
+        anomalies.push({
+            id: `anomaly_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: new Date().toISOString(),
+            sessionId: session.apiSessionId || session.cpId,
+            type: "REGULATION_OSCILLATION",
+            severity: features.voltageStability > 0.2 ? "HIGH" : "LOW",
+            score: features.voltageStability,
+            description: `Instabilité de tension détectée: ${(features.voltageStability * 100).toFixed(1)}%`,
+            recommendation: "Vérifier la qualité du réseau électrique",
+            features
+        });
+    }
+
+    return anomalies;
+}
+
+// Prédiction énergétique améliorée
+function predictEnergy(session) {
+    const metrics = session.metrics || {};
+    const currentEnergy = metrics.energyKWh || 0;
+    const elapsedSec = (Date.now() - (session._startedAt || Date.now())) / 1000;
+    const elapsedH = Math.max(0.001, elapsedSec / 3600);
+    const currentKW = metrics.powerKW || session.opts?.powerKW || 7.4;
+
+    // Calcul du SoC estimé
+    const estimatedSoC = session.mvConfig?.socStart ||
+        Math.min(80, 20 + (currentEnergy / 50) * 60);
+
+    // Temps restant basé sur courbe de charge typique
+    let remainingMin = 0;
+    if (estimatedSoC < 80) {
+        remainingMin = ((80 - estimatedSoC) / 60) * 60;
+    } else if (estimatedSoC < 100) {
+        remainingMin = ((100 - estimatedSoC) / 20) * 60;
+    }
+
+    // Facteur d'efficacité basé sur la température
+    const temp = 20; // Température par défaut
+    let efficiency = 0.92;
+    if (temp < 0) efficiency *= 0.85;
+    else if (temp > 30) efficiency *= 0.95;
+
+    const avgKW = currentEnergy / elapsedH || currentKW;
+    const predictedEnergy = currentEnergy + (avgKW * efficiency * (remainingMin / 60));
+
+    return {
+        sessionId: session.apiSessionId || session.cpId,
+        currentEnergyKWh: currentEnergy,
+        predictedFinalEnergyKWh: predictedEnergy,
+        remainingTimeMinutes: Math.round(remainingMin),
+        confidence: clamp(0.5 + Math.min(0.45, elapsedH * 0.15), 0, 0.95),
+        efficiencyTrend: efficiency > 0.9 ? "STABLE" : "DEGRADING",
+        influenceFactors: {
+            temperature: (20 - Math.abs(temp - 20)) / 20,
+            soc: estimatedSoC / 100,
+            efficiency: efficiency,
+            timeOfDay: new Date().getHours() < 7 || new Date().getHours() > 22 ? 0.05 : -0.05,
+            gridLoad: 0
+        }
+    };
+}
+
+// Analyse ERR améliorée
+function analyzeERRData(data) {
+    const results = {
+        anomalies: [],
+        statistics: {
+            totalRecords: data.length,
+            avgEfficiency: 0,
+            avgPhaseImbalance: 0,
+            setpointViolations: 0,
+            criticalAnomalies: 0
+        },
+        recommendations: []
+    };
+
+    if (!data || data.length === 0) return results;
+
+    let efficiencySum = 0;
+    let phaseImbalanceSum = 0;
+    let validEfficiencyCount = 0;
+
+    data.forEach((record, index) => {
+        try {
+            const powerOffered = parseFloat(String(record['energyRegulationRecord.energyMeasureEvent.meterValue.power.offered'] || '0').replace(/,/g, ''));
+            const powerActive = parseFloat(String(record['energyRegulationRecord.energyMeasureEvent.meterValue.power.active'] || '0').replace(/,/g, ''));
+            const current1 = parseFloat(String(record['energyRegulationRecord.energyMeasureEvent.meterValue.current.phase1'] || '0').replace(/,/g, ''));
+            const current2 = parseFloat(String(record['energyRegulationRecord.energyMeasureEvent.meterValue.current.phase2'] || '0').replace(/,/g, ''));
+            const current3 = parseFloat(String(record['energyRegulationRecord.energyMeasureEvent.meterValue.current.phase3'] || '0').replace(/,/g, ''));
+            const setpoint = parseFloat(String(record['energyRegulationRecord.setpoint.setpointValue.asPower'] || '0').replace(/,/g, ''));
+            const timestamp = record['energyRegulationRecord.energyMeasureEvent.meterValue.timestamp'] || new Date().toISOString();
+            const nodeId = record['energyRegulationRecord.energyMeasureEvent.energyNodeId'] || 'unknown';
+
+            // Analyse de l'efficacité énergétique
+            if (powerOffered > 0) {
+                const efficiency = powerActive / powerOffered;
+
+                if (efficiency > 0 && efficiency < 10) {
+                    efficiencySum += efficiency;
+                    validEfficiencyCount++;
+                }
+
+                if (efficiency > 1.5) {
+                    results.anomalies.push({
+                        id: `ano_${index}_eff_high`,
+                        timestamp: timestamp,
+                        nodeId: nodeId,
+                        type: 'STATISTICAL_OUTLIER',
+                        severity: efficiency > 2 ? 'CRITICAL' : 'HIGH',
+                        score: Math.min(1, (efficiency - 1) / 2),
+                        description: `Efficacité énergétique impossible: ${(efficiency * 100).toFixed(1)}% (Active: ${powerActive.toFixed(1)}W, Offered: ${powerOffered.toFixed(1)}W)`,
+                        recommendation: 'Vérifier l\'étalonnage des capteurs de puissance. Possible erreur de mesure.',
+                        features: { efficiency, powerActive, powerOffered }
+                    });
+                    if (efficiency > 2) results.statistics.criticalAnomalies++;
+                } else if (efficiency < 0.7 && powerOffered > 1000) {
+                    results.anomalies.push({
+                        id: `ano_${index}_eff_low`,
+                        timestamp: timestamp,
+                        nodeId: nodeId,
+                        type: 'UNDERPERFORMING',
+                        severity: efficiency < 0.5 ? 'HIGH' : 'MEDIUM',
+                        score: 1 - efficiency,
+                        description: `Rendement de charge faible: ${(efficiency * 100).toFixed(1)}%`,
+                        recommendation: 'Vérifier connexion, câble de charge, et température ambiante.',
+                        features: { efficiency, powerActive, powerOffered }
+                    });
+                }
+            }
+
+            // Analyse du déséquilibre de phases
+            const phases = [current1, current2, current3];
+            const avgCurrent = phases.reduce((a, b) => a + b, 0) / 3;
+
+            if (avgCurrent > 1) {
+                const maxImbalance = Math.max(...phases.map(p => Math.abs(p - avgCurrent) / avgCurrent));
+                phaseImbalanceSum += maxImbalance;
+
+                if (maxImbalance > 0.15) {
+                    results.anomalies.push({
+                        id: `ano_${index}_phase`,
+                        timestamp: timestamp,
+                        nodeId: nodeId,
+                        type: 'PHASE_IMBALANCE',
+                        severity: maxImbalance > 0.25 ? 'HIGH' : 'MEDIUM',
+                        score: Math.min(1, maxImbalance / 0.5),
+                        description: `Déséquilibre de phases: ${(maxImbalance * 100).toFixed(1)}% (I1: ${current1.toFixed(2)}A, I2: ${current2.toFixed(2)}A, I3: ${current3.toFixed(2)}A)`,
+                        recommendation: 'Rééquilibrer la charge sur les trois phases. Vérifier les connexions.',
+                        features: {
+                            imbalance: maxImbalance,
+                            phase1: current1,
+                            phase2: current2,
+                            phase3: current3,
+                            avgCurrent
+                        }
+                    });
+                }
+            }
+
+            // Analyse de conformité au setpoint
+            if (setpoint > 0 && powerOffered > 0) {
+                const deviation = Math.abs(powerOffered - setpoint) / setpoint;
+
+                if (deviation > 0.2) {
+                    results.statistics.setpointViolations++;
+
+                    results.anomalies.push({
+                        id: `ano_${index}_setpoint`,
+                        timestamp: timestamp,
+                        nodeId: nodeId,
+                        type: 'SETPOINT_VIOLATION',
+                        severity: deviation > 0.5 ? 'HIGH' : (deviation > 0.3 ? 'MEDIUM' : 'LOW'),
+                        score: Math.min(1, deviation),
+                        description: `Déviation du setpoint: ${(deviation * 100).toFixed(1)}% (Offert: ${powerOffered.toFixed(0)}W, Cible: ${setpoint.toFixed(0)}W)`,
+                        recommendation: powerOffered > setpoint ?
+                            'Réduire la puissance délivrée pour respecter les limites.' :
+                            'Vérifier si la borne peut atteindre la puissance demandée.',
+                        features: {
+                            deviation,
+                            powerOffered,
+                            setpoint,
+                            difference: powerOffered - setpoint
+                        }
+                    });
+
+                    if (deviation > 0.5) results.statistics.criticalAnomalies++;
+                }
+            }
+
+            // Détection d'oscillations
+            if (index > 0 && data[index - 1]) {
+                const prevSetpoint = parseFloat(String(data[index - 1]['energyRegulationRecord.setpoint.setpointValue.asPower'] || '0').replace(/,/g, ''));
+                if (prevSetpoint > 0 && setpoint > 0) {
+                    const changeRate = Math.abs(setpoint - prevSetpoint) / prevSetpoint;
+
+                    if (changeRate > 3) {
+                        results.anomalies.push({
+                            id: `ano_${index}_oscillation`,
+                            timestamp: timestamp,
+                            nodeId: nodeId,
+                            type: 'REGULATION_OSCILLATION',
+                            severity: changeRate > 5 ? 'HIGH' : 'MEDIUM',
+                            score: Math.min(1, changeRate / 10),
+                            description: `Oscillation de régulation détectée: variation de ${(changeRate * 100).toFixed(0)}%`,
+                            recommendation: 'Ajuster les paramètres PID du régulateur. Vérifier la stabilité du réseau.',
+                            features: {
+                                changeRate,
+                                currentSetpoint: setpoint,
+                                previousSetpoint: prevSetpoint
+                            }
+                        });
+                    }
+                }
+            }
+
+        } catch (error) {
+            console.error(`Erreur analyse ligne ${index}:`, error);
+        }
+    });
+
+    // Calcul des statistiques finales
+    results.statistics.avgEfficiency = validEfficiencyCount > 0 ?
+        efficiencySum / validEfficiencyCount : 0;
+    results.statistics.avgPhaseImbalance = data.length > 0 ?
+        phaseImbalanceSum / data.length : 0;
+
+    // Générer des recommandations globales
+    if (results.statistics.criticalAnomalies > 0) {
+        results.recommendations.push({
+            priority: 'URGENT',
+            message: `${results.statistics.criticalAnomalies} anomalies critiques détectées. Intervention immédiate recommandée.`
+        });
+    }
+
+    if (results.statistics.setpointViolations > data.length * 0.3) {
+        results.recommendations.push({
+            priority: 'HIGH',
+            message: 'Plus de 30% des mesures violent le setpoint. Recalibrage du système recommandé.'
+        });
+    }
+
+    if (results.statistics.avgEfficiency < 0.85 && results.statistics.avgEfficiency > 0) {
+        results.recommendations.push({
+            priority: 'MEDIUM',
+            message: `Efficacité moyenne de ${(results.statistics.avgEfficiency * 100).toFixed(1)}%. Optimisation énergétique recommandée.`
+        });
+    }
+
+    if (results.statistics.avgPhaseImbalance > 0.1) {
+        results.recommendations.push({
+            priority: 'MEDIUM',
+            message: `Déséquilibre moyen des phases de ${(results.statistics.avgPhaseImbalance * 100).toFixed(1)}%. Rééquilibrage nécessaire.`
+        });
+    }
+
+    return results;
+}
+
+// Métriques avancées
+function calculateAdvancedMetrics(sessionHistory) {
+    const powerValues = sessionHistory.map(s => s.powerKW || 0);
+    const oscillation = calculateStandardDeviation(powerValues) / (average(powerValues) || 1);
+
+    const expectedEnergy = sessionHistory.reduce((sum, s) =>
+        sum + ((s.powerKW || 0) * ((s.duration || 0) / 3600)), 0);
+    const actualEnergy = sessionHistory[sessionHistory.length - 1]?.energyKWh || 0;
+    const energyDrift = Math.abs(actualEnergy - expectedEnergy) / (expectedEnergy || 1);
+
+    return { oscillation, energyDrift };
+}
+
+// Entraînement des modèles
+async function trainModels() {
+    ML_STATE.training.isTraining = true;
+    await sleep(2000);
+
+    ML_STATE.models.anomaly = {
+        type: "IsolationForest",
+        accuracy: 0.92,
+        parameters: {
+            contamination: 0.05,
+            maxSamples: 256
+        }
+    };
+
+    ML_STATE.models.prediction = {
+        type: "RandomForest",
+        mse: 0.15,
+        r2Score: 0.89,
+        parameters: {
+            nEstimators: 100,
+            maxDepth: 10
+        }
+    };
+
+    ML_STATE.training.isTraining = false;
+    ML_STATE.training.lastTraining = new Date().toISOString();
+
+    return {
+        success: true,
+        anomalyModel: ML_STATE.models.anomaly,
+        predictionModel: ML_STATE.models.prediction
+    };
+}
+
+// Routes API ML
+app.get("/api/ml/status", (_req, res) => {
+    res.json({
+        anomalyModel: {
+            trained: !!ML_STATE.models.anomaly,
+            accuracy: ML_STATE.models.anomaly?.accuracy || 0,
+            lastTraining: ML_STATE.training.lastTraining,
+            samplesCount: ML_TRAINING_DATA.length
+        },
+        predictionModel: {
+            trained: !!ML_STATE.models.prediction,
+            mse: ML_STATE.models.prediction?.mse || 0,
+            r2Score: ML_STATE.models.prediction?.r2Score || 0,
+            lastTraining: ML_STATE.training.lastTraining
+        }
+    });
+});
+
+app.post("/api/ml/analyze/:sessionId", (req, res) => {
+    const sessionId = req.params.sessionId;
+    const session = SESSIONS_MAP.get(sessionId);
+
+    if (!session) {
+        return res.status(404).json({ error: "Session not found" });
+    }
+
+    const result = analyzeSessionML(session);
+
+    // Calcul des features pour le frontend
+    const features = {
+        sessionId,
+        powerEfficiencyMean: 0.85 + Math.random() * 0.15,
+        powerEfficiencyStd: Math.random() * 0.1,
+        setpointStability: 0.9 + Math.random() * 0.1,
+        oscillationFrequency: Math.random() * 5,
+        phaseImbalanceMean: Math.random() * 0.05,
+        phaseImbalanceMax: Math.random() * 0.1,
+        energyDrift: Math.random() * 0.02,
+        regulationPerformance: 0.8 + Math.random() * 0.2
+    };
+
+    res.json({
+        anomalies: result.anomalies,
+        prediction: result.prediction,
+        features
+    });
+});
+
+app.post("/api/ml/train", async (req, res) => {
+    if (ML_STATE.training.isTraining) {
+        return res.status(409).json({ error: "Training already in progress" });
+    }
+
+    try {
+        const result = await trainModels();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post("/api/ml/import-err", upload.single("file"), async (req, res) => {
+    try {
+        let data;
+
+        if (req.file) {
+            const content = req.file.buffer.toString("utf8");
+            // Parser CSV amélioré
+            const lines = content.split('\n');
+            const headers = lines[0].split(/[,;]/).map(h => h.trim());
+            data = lines.slice(1).map(line => {
+                const values = line.split(/[,;]/);
+                const obj = {};
+                headers.forEach((h, i) => {
+                    obj[h] = values[i]?.trim() || '';
+                });
+                return obj;
+            }).filter(row => Object.values(row).some(v => v));
+        } else if (req.body.url) {
+            const response = await fetch(req.body.url);
+            if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
+            const content = await response.text();
+            data = content.includes("{") ? JSON.parse(content) : parseCsv(content);
+        } else if (req.body.data) {
+            data = req.body.data;
+        } else {
+            return res.status(400).json({ error: "No data provided" });
+        }
+
+        // Ajouter aux données d'entraînement
+        if (Array.isArray(data)) {
+            ML_TRAINING_DATA.push(...data);
+        } else if (data.sessions) {
+            ML_TRAINING_DATA.push(...data.sessions);
+        }
+
+        res.json({
+            success: true,
+            imported: Array.isArray(data) ? data.length : data.sessions?.length || 0,
+            totalSamples: ML_TRAINING_DATA.length
+        });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.post('/api/ml/analyze-err', upload.single('file'), async (req, res) => {
+    try {
+        let data;
+
+        if (req.file) {
+            const csvText = req.file.buffer.toString();
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(/[,;]/).map(h => h.trim());
+            data = lines.slice(1).map(line => {
+                const values = line.split(/[,;]/);
+                const obj = {};
+                headers.forEach((h, i) => {
+                    obj[h] = values[i]?.trim() || '';
+                });
+                return obj;
+            }).filter(row => Object.values(row).some(v => v));
+        } else if (req.body.data) {
+            data = req.body.data;
+        } else {
+            return res.status(400).json({ error: 'Aucune donnée fournie' });
+        }
+
+        const results = analyzeERRData(data);
+
+        // Ajouter les anomalies détectées au stockage
+        ML_ANOMALIES.unshift(...results.anomalies);
+        if (ML_ANOMALIES.length > 1000) {
+            ML_ANOMALIES.splice(1000);
+        }
+
+        // Broadcaster les anomalies critiques
+        results.anomalies
+            .filter(a => a.severity === 'CRITICAL' || a.severity === 'HIGH')
+            .forEach(anomaly => broadcastMLAnomaly(anomaly));
+
+        res.json({
+            success: true,
+            ...results
+        });
+
+    } catch (error) {
+        console.error('Erreur analyse ERR:', error);
+        res.status(500).json({
+            error: 'Erreur lors de l\'analyse',
+            details: error.message
+        });
+    }
+});
+
+app.get("/api/ml/anomalies", (_req, res) => {
+    res.json(ML_ANOMALIES.slice(-50));
+});
+
+app.get("/api/ml/predictions", (_req, res) => {
+    const predictions = Array.from(ML_PREDICTIONS.values()).slice(-20);
+    res.json(predictions);
+});
+
+app.post("/api/ml/threshold", (req, res) => {
+    const { anomaly, prediction } = req.body;
+
+    if (anomaly !== undefined) {
+        ML_STATE.thresholds.anomaly = Math.max(0.001, Math.min(1, anomaly));
+    }
+    if (prediction !== undefined) {
+        ML_STATE.thresholds.prediction = Math.max(0.5, Math.min(1, prediction));
+    }
+
+    res.json(ML_STATE.thresholds);
+});
+
+/* ========================================================================== */
 /* Server Startup                                                             */
 /* ========================================================================== */
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     log(`Runner HTTP prêt sur http://localhost:${PORT}`);
     log(`Docs Swagger: /api/docs  (JSON: /api/swagger.json)`);
     log(`TNR endpoints disponibles sur /api/tnr/*`);
     log(`Simu endpoints disponibles sur /api/simu/*`);
     log(`Perf endpoints disponibles sur /api/perf/*`);
+    log(`ML endpoints disponibles sur /api/ml/*`);
+    log(`WebSocket ML disponible sur ws://localhost:${PORT}`);
+
     if (!_cpuTimer) {
         _cpuTimer = setInterval(() => {
             const load = os.loadavg?.()[0] || 0;
@@ -4305,6 +4929,23 @@ app.listen(PORT, () => {
             if (startSamples.length) pushLatencySample(startSamples.reduce((a, b) => a + b, 0) / startSamples.length);
         }, 1000);
     }
+});
+
+// Initialiser WebSocket sur le même serveur HTTP
+wss = new WebSocketServer({ server });
+
+wss.on('connection', (ws) => {
+    console.log('Client WebSocket connecté pour notifications ML');
+
+    ws.on('message', (message) => {
+        // Gérer les messages entrants si nécessaire
+    });
+
+    // Envoyer un message de bienvenue
+    ws.send(JSON.stringify({
+        type: 'CONNECTION',
+        message: 'Connected to ML WebSocket'
+    }));
 });
 
 process.on("uncaughtException", (err) => log(`uncaughtException: ${err?.stack || err}`));

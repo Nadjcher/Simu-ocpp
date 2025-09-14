@@ -9,6 +9,7 @@ import PerfOCPPTab from "./tabs/PerfOCPPTab";
 import TnrTab from "./tabs/TnrTab";
 import SmartChargingTab from "./tabs/SmartChargingTab";
 import OCPPMessagesTab from "./tabs/OCPPMessagesTab";
+import MLAnalysisTab from "./tabs/MLAnalysisTab";
 import "@/styles/buttons.css";
 
 type TabKey =
@@ -17,7 +18,8 @@ type TabKey =
     | "perf-ocpp"
     | "tnr"
     | "smart-charging"
-    | "ocpp-messages";
+    | "ocpp-messages"
+    | "ml-analysis";
 
 const TABS: { key: TabKey; label: string }[] = [
     { key: "simul-gpm", label: "Simul GPM" },
@@ -26,6 +28,7 @@ const TABS: { key: TabKey; label: string }[] = [
     { key: "tnr", label: "TNR" },
     { key: "smart-charging", label: "Smart Charging" },
     { key: "ocpp-messages", label: "OCPP Messages" },
+    { key: "ml-analysis", label: "ML Analysis " },
 ];
 
 export default function App() {
@@ -63,6 +66,7 @@ export default function App() {
                         {active === "tnr" && <TnrTab />}
                         {active === "smart-charging" && <SmartChargingTab />}
                         {active === "ocpp-messages" && <OCPPMessagesTab />}
+                        {active === "ml-analysis" && <MLAnalysisTab />}
                     </main>
                 </div>
             </div>
