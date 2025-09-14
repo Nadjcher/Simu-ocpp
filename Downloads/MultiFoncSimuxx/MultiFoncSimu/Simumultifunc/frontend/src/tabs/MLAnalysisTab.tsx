@@ -437,48 +437,68 @@ export default function MLAnalysisTab() {
             Notification.requestPermission();
         }
 
-        // Connexion WebSocket pour notifications temps réel
-        const ws = new WebSocket('ws://localhost:8877');
-        wsRef.current = ws;
-
-        ws.onopen = () => {
-            console.log('Connected to ML WebSocket');
-        };
-
-        ws.onmessage = (event) => {
+        // Délai pour laisser le serveur démarrer complètement
+        const connectWebSocket = () => {
             try {
-                const data = JSON.parse(event.data);
+                const ws = new WebSocket('ws://localhost:8877');
+                wsRef.current = ws;
 
-                if (data.type === 'ML_ANOMALY') {
-                    // Ajouter l'anomalie à la liste
-                    setAnomalies(prev => [data.data, ...prev].slice(0, 50));
+                ws.onopen = () => {
+                    console.log('✅ Connected to ML WebSocket');
+                };
 
-                    // Notification si critique
-                    if ((data.data.severity === 'CRITICAL' || data.data.severity === 'HIGH') &&
-                        'Notification' in window &&
-                        Notification.permission === 'granted') {
-                        new Notification('🚨 Anomalie Détectée', {
-                            body: `${data.data.type}: ${data.data.description}`,
-                            icon: '🚨'
-                        });
+                ws.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+
+                        if (data.type === 'CONNECTION') {
+                            console.log('WebSocket handshake:', data.message);
+                        } else if (data.type === 'ML_ANOMALY') {
+                            console.log('🔔 Nouvelle anomalie reçue:', data.data);
+
+                            // Ajouter l'anomalie à la liste
+                            setAnomalies(prev => [data.data, ...prev].slice(0, 50));
+
+                            // Notification si critique
+                            if ((data.data.severity === 'CRITICAL' || data.data.severity === 'HIGH') &&
+                                'Notification' in window &&
+                                Notification.permission === 'granted') {
+                                new Notification('🚨 Anomalie Détectée', {
+                                    body: `${data.data.type}: ${data.data.description}`,
+                                    icon: '🚨'
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Erreur parsing WebSocket message:', error);
                     }
-                }
+                };
+
+                ws.onerror = (error) => {
+                    console.error('❌ WebSocket error:', error);
+                    // Réessayer la connexion après 5 secondes
+                    setTimeout(connectWebSocket, 5000);
+                };
+
+                ws.onclose = () => {
+                    console.log('🔌 WebSocket disconnected');
+                    // Réessayer la connexion après 3 secondes
+                    setTimeout(connectWebSocket, 3000);
+                };
             } catch (error) {
-                console.error('Erreur parsing WebSocket message:', error);
+                console.error('Failed to create WebSocket:', error);
+                // Réessayer après 5 secondes
+                setTimeout(connectWebSocket, 5000);
             }
         };
 
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
-
-        ws.onclose = () => {
-            console.log('WebSocket disconnected');
-        };
+        // Attendre 1 seconde avant de se connecter (laisser le serveur démarrer)
+        const timeoutId = setTimeout(connectWebSocket, 1000);
 
         // Cleanup
         return () => {
-            if (wsRef.current) {
+            clearTimeout(timeoutId);
+            if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
                 wsRef.current.close();
                 wsRef.current = null;
             }
