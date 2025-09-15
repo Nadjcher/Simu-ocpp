@@ -1,0 +1,24 @@
+button, .btn {
+    --btn-bg: #0ea5e9;
+    --btn-border: #0284c7;
+    --btn-text: #fff;
+    --btn-bg-hover: #0284c7;
+    --btn-bg-danger: #ef4444;
+    --btn-border-danger: #dc2626;
+    --btn-bg-success: #22c55e;
+    --btn-border-success: #16a34a;
+
+    display:inline-flex; align-items:center; justify-content:center;
+    border:1px solid var(--btn-border); background:var(--btn-bg); color:var(--btn-text);
+    padding:8px 12px; border-radius:8px; font-weight:600; line-height:1;
+    transition:background .15s ease, transform .02s ease;
+}
+button:hover, .btn:hover { background:var(--btn-bg-hover); }
+button:active, .btn:active { transform: translateY(1px); }
+
+.btn-secondary { --btn-bg:#e5e7eb; --btn-border:#cbd5e1; --btn-text:#111827; --btn-bg-hover:#dbe2e8; }
+.btn-danger    { --btn-bg:var(--btn-bg-danger); --btn-border:var(--btn-border-danger); }
+.btn-success   { --btn-bg:var(--btn-bg-success); --btn-border:var(--btn-border-success); }
+
+.btn-sm { padding:6px 10px; font-size:14px; border-radius:7px; }
+.btn-xs { padding:4px 8px;  font-size:12px; border-radius:6px; }

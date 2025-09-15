@@ -1,0 +1,11 @@
+{
+  "id": "tnr_demo_1",
+  "name": "quick-test",
+  "createdAt": "2025-08-20T16:55:11.105Z",
+  "config": {
+    "url": "wss://evse-test.total-ev-charge.com/ocpp/WebSocket"
+  },
+  "sessions": [],
+  "events": [],
+  "expected": {}
+}
