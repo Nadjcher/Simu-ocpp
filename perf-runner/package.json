@@ -1,0 +1,43 @@
+{
+  "name": "ocpp-runner-http-api",
+  "version": "2.0.0",
+  "description": "OCPP Runner HTTP API with EVSE Simulation, Performance Testing and TNR",
+  "type": "module",
+  "main": "runner-http-api.js",
+  "scripts": {
+    "start": "node runner-http-api.js",
+    "dev": "node --watch runner-http-api.js",
+    "test": "echo \"Test command placeholder\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "ws": "^8.14.2",
+    "multer": "^1.4.5-lts.1",
+    "swagger-ui-express": "^5.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "ocpp",
+    "evse",
+    "simulation",
+    "performance",
+    "testing",
+    "replay",
+    "websocket",
+    "api"
+  ],
+  "author": "OCPP Dev Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/ocpp-runner.git"
+  }
+}
