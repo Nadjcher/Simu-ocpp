@@ -1,0 +1,114 @@
+{
+  "vehicles": [
+    {
+      "id": "tesla-model3",
+      "name": "Tesla Model 3",
+      "brand": "Tesla",
+      "batteryCapacity": 75.0,
+      "maxACPower": 11.0,
+      "maxDCPower": 250.0,
+      "supportSmartCharging": true,
+      "chargingCurve": {
+        "0": 250.0,
+        "10": 250.0,
+        "20": 250.0,
+        "30": 200.0,
+        "40": 150.0,
+        "50": 120.0,
+        "60": 100.0,
+        "70": 75.0,
+        "80": 50.0,
+        "90": 25.0,
+        "100": 0.0
+      }
+    },
+    {
+      "id": "renault-zoe",
+      "name": "Renault Zoe R135",
+      "brand": "Renault",
+      "batteryCapacity": 52.0,
+      "maxACPower": 22.0,
+      "maxDCPower": 50.0,
+      "supportSmartCharging": false,
+      "chargingCurve": {
+        "0": 50.0,
+        "10": 50.0,
+        "20": 50.0,
+        "30": 48.0,
+        "40": 46.0,
+        "50": 40.0,
+        "60": 35.0,
+        "70": 28.0,
+        "80": 22.0,
+        "90": 11.0,
+        "100": 0.0
+      }
+    },
+    {
+      "id": "nissan-leaf",
+      "name": "Nissan Leaf e+",
+      "brand": "Nissan",
+      "batteryCapacity": 62.0,
+      "maxACPower": 6.6,
+      "maxDCPower": 100.0,
+      "supportSmartCharging": true,
+      "chargingCurve": {
+        "0": 100.0,
+        "10": 100.0,
+        "20": 95.0,
+        "30": 85.0,
+        "40": 75.0,
+        "50": 65.0,
+        "60": 55.0,
+        "70": 45.0,
+        "80": 30.0,
+        "90": 15.0,
+        "100": 0.0
+      }
+    },
+    {
+      "id": "vw-id3",
+      "name": "Volkswagen ID.3",
+      "brand": "Volkswagen",
+      "batteryCapacity": 58.0,
+      "maxACPower": 11.0,
+      "maxDCPower": 125.0,
+      "supportSmartCharging": true,
+      "chargingCurve": {
+        "0": 125.0,
+        "10": 125.0,
+        "20": 125.0,
+        "30": 115.0,
+        "40": 100.0,
+        "50": 85.0,
+        "60": 70.0,
+        "70": 55.0,
+        "80": 35.0,
+        "90": 20.0,
+        "100": 0.0
+      }
+    },
+    {
+      "id": "hyundai-kona",
+      "name": "Hyundai Kona Electric",
+      "brand": "Hyundai",
+      "batteryCapacity": 64.0,
+      "maxACPower": 11.0,
+      "maxDCPower": 77.0,
+      "supportSmartCharging": true,
+      "chargingCurve": {
+        "0": 77.0,
+        "10": 77.0,
+        "20": 77.0,
+        "30": 75.0,
+        "40": 70.0,
+        "50": 65.0,
+        "60": 55.0,
+        "70": 45.0,
+        "80": 25.0,
+        "90": 12.0,
+        "100": 0.0
+      }
+    }
+  ]
+}
